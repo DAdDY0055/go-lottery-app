@@ -2,7 +2,7 @@ package controllers
 
 import (
 	"github.com/gin-gonic/gin"
-	"github.com/DAdDY0055/go-gin-gorm-todo-app/models"
+	"github.com/DAdDY0055/go-lottery-app/models"
 	"github.com/jinzhu/gorm"
 	"net/http"
 )

@@ -1,8 +1,8 @@
 package main
 
 import (
-	"github.com/DAdDY0055/go-gin-gorm-todo-app/db"
-	"github.com/DAdDY0055/go-gin-gorm-todo-app/router"
+	"github.com/DAdDY0055/go-lottery-app/db"
+	"github.com/DAdDY0055/go-lottery-app/router"
 )
 
 func main() {

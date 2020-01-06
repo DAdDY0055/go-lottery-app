@@ -2,8 +2,8 @@ package router
 
 import (
 	"github.com/gin-gonic/gin"
-	"github.com/DAdDY0055/go-gin-gorm-todo-app/controllers"
-	"github.com/DAdDY0055/go-gin-gorm-todo-app/db"
+	"github.com/DAdDY0055/go-lottery-app/controllers"
+	"github.com/DAdDY0055/go-lottery-app/db"
 )
 
 func Router() {

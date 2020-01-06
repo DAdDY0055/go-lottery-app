@@ -1,17 +1,25 @@
 package db
 
 import (
-	"github.com/DAdDY0055/go-gin-gorm-todo-app/models"
 	"github.com/jinzhu/gorm"
-	_ "github.com/mattn/go-sqlite3"
+	_ "github.com/jinzhu/gorm/dialects/postgres" // Use PostgreSQL in gorm
+	"github.com/DAdDY0055/go-lottery-app/models"
 )
 
-var db *gorm.DB
+var (
+	db  *gorm.DB
+	err error
+)
 
 func Initialize() {
-	db, _ = gorm.Open("sqlite3", "task.db")
+	connection := "host=0.0.0.0 port=5432 user=postgres password=postgres dbname=postgres sslmode=disable"
+	db, err = gorm.Open("postgres", connection)
 
 	db.LogMode(true)
+
+	if err != nil {
+		panic(err)
+	}
 
 	db.AutoMigrate(&models.Task{})
 }
@@ -21,5 +29,7 @@ func Get() *gorm.DB {
 }
 
 func Close() {
-	db.Close()
+	if err := db.Close(); err != nil {
+		panic(err)
+  }
 }

@@ -1,0 +1,11 @@
+version: '3.7' # composeファイルのバーション指定
+services:
+  db:
+    image: postgres:alpine
+    hostname: postgres
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+      POSTGRES_DB: postgres
+    ports:
+      - 5432:5432
