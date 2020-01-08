@@ -10,18 +10,33 @@ func Router() {
 	router := gin.Default()
 
 	// globパターンに一致するHTMLファイルをロードしHTML Rendererに関連付ける
-	router.LoadHTMLGlob("templates/*.html")
+	router.LoadHTMLGlob("templates/*/*.html")
 
-	// TaskHandler構造体に紐付けたCRUDメソッドを呼び出す
-	handler := controllers.TaskHandler{
+	// UserHandler構造体に紐付けたCRUDメソッドを呼び出す
+	handler := controllers.LottelyHandler{
 		db.Get(),
 	}
 
-	router.GET("/", handler.GetAll)
-	router.POST("/", handler.Create)
-	router.GET("/:id", handler.Edit)
-	router.POST("/update/:id", handler.Update)
-	router.POST("/delete/:id", handler.Delete)
+	// 抽選
+	router.GET("/", handler.Top)
+	router.GET("/lottery", handler.ChoisePrize)
+	router.GET("/winner", handler.ChoiseUser)
+
+	// ユーザー
+	router.GET("/user", handler.UserGetAll)
+	router.POST("/user", handler.UserCreate)
+	router.GET("/user/:id", handler.UserEdit)
+	router.POST("/user/update/:id", handler.UserUpdate)
+	router.POST("/user/delete/:id", handler.UserDelete)
+	router.POST("/user/csv", handler.UserReadCsv)
+
+	// 商品
+	router.GET("/prize", handler.PrizeGetAll)
+	router.POST("/prize", handler.PrizeCreate)
+	router.GET("/prize/:id", handler.PrizeEdit)
+	router.POST("/prize/update/:id", handler.PrizeUpdate)
+	router.POST("/prize/delete/:id", handler.PrizeDelete)
+	router.POST("/prize/csv", handler.PrizeReadCsv)
 
   // Routerをhttp.Serverに接続し、HTTPリクエストのリスニングとサービスを開始する
   router.Run()

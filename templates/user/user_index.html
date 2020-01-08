@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <title>参加者登録</title>
+</head>
+<body>
+<form method="POST" action="/user">
+    Name : <input type="text" name="name" value="">
+    Department : <input type="text" name="department" value="">
+    <input type="submit" value="登録">
+</form>
+
+<form method="POST" action="/csv">
+    CSVファイル(1列目：氏名、2列目：部署名) : <input type="file" name="csv" value="">
+    <input type="submit" value="登録">
+</form>
+
+<br>
+
+<ul>
+    {{ range .users }}
+        <li>
+            <form method="POST" action="/delete/{{.ID}}">
+                {{.ID}} : {{ .Name }} : {{ .Department }}[<a href="/user/{{.ID}}">編集</a>]
+                <input type="submit" value="削除">
+            </form>
+        </li>
+    {{end}}
+</ul>
+
+</body>
+</html>

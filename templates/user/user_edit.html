@@ -1,0 +1,14 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <title>参加者編集</title>
+</head>
+<body>
+<form action="/user/update/{{.user.ID}}" method="POST">
+    参加者氏名 : <input type="text" name="name" value="{{.user.Name}}"><br>
+    部署名 : <input type="text" name="department" value="{{.user.Department}}"><br>
+    <input type="submit" value="更新">
+</form>
+</body>
+</html>

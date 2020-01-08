@@ -1,0 +1,14 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <title>商品編集</title>
+</head>
+<body>
+<form action="/prize/update/{{.prize.ID}}" method="POST">
+    商品名 : <input type="text" name="name" value="{{.prize.Name}}"><br>
+    当選者 : <input type="text" name="win" value="{{.prize.WinUserName}}"><br>
+    <input type="submit" value="更新">
+</form>
+</body>
+</html>

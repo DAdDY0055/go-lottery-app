@@ -21,7 +21,7 @@ func Initialize() {
 		panic(err)
 	}
 
-	db.AutoMigrate(&models.Task{})
+	db.AutoMigrate(&models.User{}, &models.Prize{})
 }
 
 func Get() *gorm.DB {
