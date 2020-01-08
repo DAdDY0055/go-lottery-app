@@ -6,5 +6,6 @@ type User struct {
 	gorm.Model
 	Name string
 	Department string
-	IsWin      bool
+	IsWin      string `gorm:"default:'false'"`
+	Win        string `gorm:"default:'false'"`
 }

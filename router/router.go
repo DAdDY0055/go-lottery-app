@@ -19,7 +19,11 @@ func Router() {
 
 	// 抽選
 	router.GET("/", handler.Top)
-	router.GET("/lottery", handler.ChoisePrize)
+	router.GET("/lottery", handler.WinnerAnnounce)
+	// router.GET("/lottery/aru", handler.ChoisePrize)
+	// router.GET("/lottery/kj", handler.ChoisePrize)
+	// router.GET("/lottery/yamamura", handler.ChoisePrize)
+	// router.GET("/lottery/kogishi", handler.ChoisePrize)
 	router.GET("/winner", handler.ChoiseUser)
 
 	// ユーザー

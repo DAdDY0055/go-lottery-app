@@ -21,8 +21,8 @@
 <ul>
     {{ range .users }}
         <li>
-            <form method="POST" action="/delete/{{.ID}}">
-                {{.ID}} : {{ .Name }} : {{ .Department }}[<a href="/user/{{.ID}}">編集</a>]
+            <form method="POST" action="/user/delete/{{.ID}}">
+                {{.ID}} : {{ .Name }} : {{ .Department }} {{ .Win }}[<a href="/user/{{.ID}}">編集</a>]
                 <input type="submit" value="削除">
             </form>
         </li>

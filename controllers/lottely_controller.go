@@ -23,10 +23,13 @@ func (handler *LottelyHandler) Top(c *gin.Context) {
 	c.HTML(http.StatusOK, "lottery_index.html", gin.H{})
 }
 
-// 景品選択
-func (handler *LottelyHandler) ChoisePrize(c *gin.Context) {
+// 当選発表
+func (handler *LottelyHandler) WinnerAnnounce(c *gin.Context) {
 	var WinPrizes []models.Prize
+	var Users []models.User
+
 	handler.Db.Find(&WinPrizes) // DBから全てのレコードを取得する
+	handler.Db.Where("IsWin = ?", false).Find(&Users) // DBから全てのレコードを取得する
 
     rand.Seed(time.Now().UnixNano())
     for i := range WinPrizes {
@@ -42,17 +45,23 @@ func (handler *LottelyHandler) ChoisePrize(c *gin.Context) {
 // 当選者選択
 func (handler *LottelyHandler) ChoiseUser(c *gin.Context) {
 	var WinUsers []models.User
-	handler.Db.Find(&WinUsers) // DBから全てのレコードを取得する
+	// var WinPrize []models.Prize
 
-    rand.Seed(time.Now().UnixNano())
-    for i := range WinUsers {
-        j := rand.Intn(i + 1)
-        WinUsers[i], WinUsers[j] = WinUsers[j], WinUsers[i]
-	}
+	// 対象の商品に当選者がいなかった場合、抽選を行う
+		handler.Db.Not("win = ?", "sumi").Find(&WinUsers) // DBから全てのレコードを取得する
 
-	WinUser := WinUsers[0]
+		rand.Seed(time.Now().UnixNano())
+		for i := range WinUsers {
+			j := rand.Intn(i + 1)
+			WinUsers[i], WinUsers[j] = WinUsers[j], WinUsers[i]
+		}
 
-	c.HTML(http.StatusOK, "lottery_winner.html", gin.H{"winner": WinUser})
+		winUser := WinUsers[0]
+
+		winUser.Win = "sumi"       // 当選したら当選済みにする
+		handler.Db.Save(&winUser)  // 指定のレコードを更新する
+
+	c.HTML(http.StatusOK, "lottery_winner.html", gin.H{"winner": winUser})
 }
 
 
@@ -86,9 +95,11 @@ func (handler *LottelyHandler) UserUpdate(c *gin.Context) {
 	id := c.Param("id")   // edit.htmlからidを取得
 	name, _ := c.GetPostForm("name") // index.htmlからnameを取得
 	department, _ := c.GetPostForm("department") // index.htmlからdepartmentを取得
+	// isWin, _ := c.GetPostForm("isWin") // index.htmlからdepartmentを取得
 	handler.Db.First(&user, id)      // idに一致するレコードを取得する
 	user.Name = name       // nameを上書きする
-	user.Department = department       // nameを上書きする
+	user.Department = department  // departmentを上書きする
+	// user.IsWin = isWin       // isWinを上書きする→Stringと判定されダメらしい
 	handler.Db.Save(&user) // 指定のレコードを更新する
 	c.Redirect(http.StatusMovedPermanently, "/user")
 }
