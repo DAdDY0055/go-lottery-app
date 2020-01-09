@@ -1,9 +1,9 @@
 package router
 
 import (
-	"github.com/gin-gonic/gin"
 	"github.com/DAdDY0055/go-lottery-app/controllers"
 	"github.com/DAdDY0055/go-lottery-app/db"
+	"github.com/gin-gonic/gin"
 )
 
 func Router() {
@@ -44,6 +44,6 @@ func Router() {
 	router.POST("/prize/delete/:id", handler.PrizeDelete)
 	// router.POST("/prize/csv", handler.PrizeReadCsv)
 
-  // Routerをhttp.Serverに接続し、HTTPリクエストのリスニングとサービスを開始する
-  router.Run()
+	// Routerをhttp.Serverに接続し、HTTPリクエストのリスニングとサービスを開始する
+	router.Run()
 }

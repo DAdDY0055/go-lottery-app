@@ -1,7 +1,7 @@
 package models
 
 type Prize struct {
-    ID     int
+	ID     int
 	Name   string
 	Winner string
 }

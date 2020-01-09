@@ -1,9 +1,9 @@
 package db
 
 import (
+	"github.com/DAdDY0055/go-lottery-app/models"
 	"github.com/jinzhu/gorm"
 	_ "github.com/jinzhu/gorm/dialects/postgres" // Use PostgreSQL in gorm
-	"github.com/DAdDY0055/go-lottery-app/models"
 )
 
 var (
@@ -31,5 +31,5 @@ func Get() *gorm.DB {
 func Close() {
 	if err := db.Close(); err != nil {
 		panic(err)
-  }
+	}
 }
