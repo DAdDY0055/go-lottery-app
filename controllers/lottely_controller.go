@@ -1,5 +1,6 @@
 package controllers
 
+
 import (
 	"github.com/gin-gonic/gin"
 	"github.com/DAdDY0055/go-lottery-app/models"
@@ -17,38 +18,44 @@ type LottelyHandler struct {
 	Db *gorm.DB
 }
 
+
+// TODO: 超ファットコントローラーになっているのでモデルに処理を移す
 // 抽選画面
 // トップページ
 func (handler *LottelyHandler) Top(c *gin.Context) {
 	c.HTML(http.StatusOK, "lottery_index.html", gin.H{})
 }
 
-// 当選発表
-func (handler *LottelyHandler) WinnerAnnounce(c *gin.Context) {
-	var WinPrizes []models.Prize
-	var Users []models.User
+// 景品選択
+// func (handler *LottelyHandler) WinnerAnnounce(c *gin.Context) {
+// 	var WinPrizes []models.Prize
+// 	var Users []models.User
 
-	handler.Db.Find(&WinPrizes) // DBから全てのレコードを取得する
-	handler.Db.Where("IsWin = ?", false).Find(&Users) // DBから全てのレコードを取得する
+// 	handler.Db.Find(&WinPrizes) // DBから全てのレコードを取得する
+// 	handler.Db.Where("IsWin = ?", false).Find(&Users) // DBから当選していない全てのユーザーを取得する
 
-    rand.Seed(time.Now().UnixNano())
-    for i := range WinPrizes {
-        j := rand.Intn(i + 1)
-        WinPrizes[i], WinPrizes[j] = WinPrizes[j], WinPrizes[i]
-	}
+//     rand.Seed(time.Now().UnixNano())
+//     for i := range WinPrizes {
+//         j := rand.Intn(i + 1)
+//         WinPrizes[i], WinPrizes[j] = WinPrizes[j], WinPrizes[i]
+// 	}
 
-	WinPrize := WinPrizes[0]
+// 	WinPrize := WinPrizes[0]
 
-	c.HTML(http.StatusOK, "lottery_prize.html", gin.H{"win": WinPrize})
-}
+// 	c.HTML(http.StatusOK, "lottery_prize.html", gin.H{"win": WinPrize})
+// }
+
 
 // 当選者選択
 func (handler *LottelyHandler) ChoiseUser(c *gin.Context) {
 	var WinUsers []models.User
-	// var WinPrize []models.Prize
+	winPrize := models.Prize{}
+
+	handler.Db.Where("id = ?", 1).Find(&winPrize)
 
 	// 対象の商品に当選者がいなかった場合、抽選を行う
-		handler.Db.Not("win = ?", "sumi").Find(&WinUsers) // DBから全てのレコードを取得する
+	if winPrize.Winner == "" {
+		handler.Db.Not("win = ?", "済み").Find(&WinUsers) // DBから当選済み以外のユーザーを抽出する
 
 		rand.Seed(time.Now().UnixNano())
 		for i := range WinUsers {
@@ -58,10 +65,16 @@ func (handler *LottelyHandler) ChoiseUser(c *gin.Context) {
 
 		winUser := WinUsers[0]
 
-		winUser.Win = "sumi"       // 当選したら当選済みにする
-		handler.Db.Save(&winUser)  // 指定のレコードを更新する
+		winUser.Win = "済み"            // 当選したら当選済みにする
+		handler.Db.Save(&winUser)      // 指定のレコードを更新する
 
-	c.HTML(http.StatusOK, "lottery_winner.html", gin.H{"winner": winUser})
+		winPrize.Winner = winUser.Name // 当選者名を入れる
+		handler.Db.Save(&winPrize)     // 指定のレコードを更新する
+
+		c.HTML(http.StatusOK, "lottery_winner.html", gin.H{"prize": winPrize})
+	} else {
+		c.HTML(http.StatusOK, "lottery_winner.html", gin.H{"prize": winPrize})
+	}
 }
 
 
@@ -169,7 +182,7 @@ func (handler *LottelyHandler) PrizeUpdate(c *gin.Context) {
 	win, _ := c.GetPostForm("win") // prize_edit.htmlからwinを取得
 	handler.Db.First(&prize, id)      // idに一致するレコードを取得する
 	prize.Name = name       // nameを上書きする
-	prize.WinUserName = win // winを上書きする
+	prize.Winner = win // winを上書きする
 	handler.Db.Save(&prize) // 指定のレコードを更新する
 	c.Redirect(http.StatusMovedPermanently, "/prize")
 }

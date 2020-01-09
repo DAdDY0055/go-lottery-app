@@ -21,7 +21,7 @@
     {{ range .prizes }}
         <li>
             <form method="POST" action="/prize/delete/{{.ID}}">
-                {{.ID}} : {{ .Name }} : {{ .WinUserName }} [<a href="/prize/{{.ID}}">編集</a>]
+                {{.ID}} : {{ .Name }} : {{ .Winner }} [<a href="/prize/{{.ID}}">編集</a>]
                 <input type="submit" value="削除">
             </form>
         </li>
