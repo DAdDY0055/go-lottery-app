@@ -28,3 +28,7 @@
 [prune]
   go-tests = true
   unused-packages = true
+
+[metadata.heroku]
+  root-package = "github.com/DAdDY0055/go-lottery-app"
+  go-version = "1.8.3"
