@@ -22,10 +22,10 @@ func Router() {
 	router.GET("/winner/multi/ten", handler.ChoiseTen)
 	router.GET("/winner/one/:id", handler.ChoiseOne) // 一つの景品発表の場合はこれでID指定
 	router.GET("/winner/twe", handler.ChoiseTwe)
-	// router.GET("/winner/the", handler.ChoiseThe)
-	// router.GET("/winner/the2", handler.ChoiseThe2)
-	// router.GET("/winner/for", handler.Choisefor)
-	// router.GET("/winner/one/aru", handler.Choisearu)
+	router.GET("/winner/the", handler.ChoiseThe)
+	router.GET("/winner/the2", handler.ChoiseThe2)
+	router.GET("/winner/for", handler.Choisefor)
+	router.GET("/winner/aru", handler.Choisearu)
 
 	// ユーザー
 	router.GET("/user", handler.UserGetAll)

@@ -117,13 +117,13 @@ func (handler *LottelyHandler) ChoiseTen(c *gin.Context) {
 	c.HTML(http.StatusOK, "lottery_winners.html", gin.H{"prizes": Prizes})
 }
 
-// 10位〜14位の当選者選択
-func (handler *LottelyHandler) ChoiseTen(c *gin.Context) {
+// 15位〜29位の当選者選択
+func (handler *LottelyHandler) ChoiseTwe(c *gin.Context) {
 	var WinUsers []models.User
 	var Prizes []models.Prize
 	// まとめて型定義する方法があった気がする
 	// prize   := models.Prize{}
-	PrizeNumbers := []int{10, 11, 12, 13, 14}
+	PrizeNumbers := []int{15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29}
 
 	// 対象の商品に当選者がいなかった場合、抽選を行う
 	for _, prizeNumber := range PrizeNumbers {
@@ -157,14 +157,171 @@ func (handler *LottelyHandler) ChoiseTen(c *gin.Context) {
 	c.HTML(http.StatusOK, "lottery_winners.html", gin.H{"prizes": Prizes})
 }
 
+// 30位〜35位の当選者選択
+func (handler *LottelyHandler) ChoiseThe(c *gin.Context) {
+	var WinUsers []models.User
+	var Prizes []models.Prize
+	// まとめて型定義する方法があった気がする
+	// prize   := models.Prize{}
+	PrizeNumbers := []int{30, 31, 32, 33, 34, 35}
 
+	// 対象の商品に当選者がいなかった場合、抽選を行う
+	for _, prizeNumber := range PrizeNumbers {
+		prize   := models.Prize{}
+		handler.Db.Where("id = ?", prizeNumber).Find(&prize)
 
+		if prize.Winner == "" {
+			handler.Db.Not("win = ?", "済み").Find(&WinUsers) // DBから当選済み以外のユーザーを抽出する
+
+			rand.Seed(time.Now().UnixNano())
+			for i := range WinUsers {
+				j := rand.Intn(i + 1)
+				WinUsers[i], WinUsers[j] = WinUsers[j], WinUsers[i]
+			}
+
+			winUser :=  models.User{}    // 変数を初期化
+			winUser = WinUsers[0]
+
+			winUser.Win = "済み"         // 当選したら当選済みにする
+			handler.Db.Save(&winUser)   // 指定のレコードを更新する
+
+			prize.Winner = winUser.Name // 当選者名を入れる
+			handler.Db.Save(&prize)     // 指定のレコードを更新する
+		}
+	}
+
+	handler.Db.Where("id IN (?)", PrizeNumbers).Find(&Prizes)
+
+	spew.Dump(Prizes)
+
+	c.HTML(http.StatusOK, "lottery_winners.html", gin.H{"prizes": Prizes})
+}
+
+// 36位〜40位の当選者選択
+func (handler *LottelyHandler) ChoiseThe2(c *gin.Context) {
+	var WinUsers []models.User
+	var Prizes []models.Prize
+	// まとめて型定義する方法があった気がする
+	// prize   := models.Prize{}
+	PrizeNumbers := []int{36, 37, 38, 39, 40}
+
+	// 対象の商品に当選者がいなかった場合、抽選を行う
+	for _, prizeNumber := range PrizeNumbers {
+		prize   := models.Prize{}
+		handler.Db.Where("id = ?", prizeNumber).Find(&prize)
+
+		if prize.Winner == "" {
+			handler.Db.Not("win = ?", "済み").Find(&WinUsers) // DBから当選済み以外のユーザーを抽出する
+
+			rand.Seed(time.Now().UnixNano())
+			for i := range WinUsers {
+				j := rand.Intn(i + 1)
+				WinUsers[i], WinUsers[j] = WinUsers[j], WinUsers[i]
+			}
+
+			winUser :=  models.User{}    // 変数を初期化
+			winUser = WinUsers[0]
+
+			winUser.Win = "済み"         // 当選したら当選済みにする
+			handler.Db.Save(&winUser)   // 指定のレコードを更新する
+
+			prize.Winner = winUser.Name // 当選者名を入れる
+			handler.Db.Save(&prize)     // 指定のレコードを更新する
+		}
+	}
+
+	handler.Db.Where("id IN (?)", PrizeNumbers).Find(&Prizes)
+
+	spew.Dump(Prizes)
+
+	c.HTML(http.StatusOK, "lottery_winners.html", gin.H{"prizes": Prizes})
+}
+
+// 41位〜43位の当選者選択
+func (handler *LottelyHandler) Choisefor(c *gin.Context) {
+	var WinUsers []models.User
+	var Prizes []models.Prize
+	// まとめて型定義する方法があった気がする
+	// prize   := models.Prize{}
+	PrizeNumbers := []int{41, 42, 43, 44, 45}
+
+	// 対象の商品に当選者がいなかった場合、抽選を行う
+	for _, prizeNumber := range PrizeNumbers {
+		prize   := models.Prize{}
+		handler.Db.Where("id = ?", prizeNumber).Find(&prize)
+
+		if prize.Winner == "" {
+			handler.Db.Not("win = ?", "済み").Find(&WinUsers) // DBから当選済み以外のユーザーを抽出する
+
+			rand.Seed(time.Now().UnixNano())
+			for i := range WinUsers {
+				j := rand.Intn(i + 1)
+				WinUsers[i], WinUsers[j] = WinUsers[j], WinUsers[i]
+			}
+
+			winUser :=  models.User{}    // 変数を初期化
+			winUser = WinUsers[0]
+
+			winUser.Win = "済み"         // 当選したら当選済みにする
+			handler.Db.Save(&winUser)   // 指定のレコードを更新する
+
+			prize.Winner = winUser.Name // 当選者名を入れる
+			handler.Db.Save(&prize)     // 指定のレコードを更新する
+		}
+	}
+
+	handler.Db.Where("id IN (?)", PrizeNumbers).Find(&Prizes)
+
+	spew.Dump(Prizes)
+
+	c.HTML(http.StatusOK, "lottery_winners.html", gin.H{"prizes": Prizes})
+}
+
+// あったで賞(46位〜49位)の当選者選択
+func (handler *LottelyHandler) Choisearu(c *gin.Context) {
+	var WinUsers []models.User
+	var Prizes []models.Prize
+	// まとめて型定義する方法があった気がする
+	// prize   := models.Prize{}
+	PrizeNumbers := []int{46, 47, 48, 49}
+
+	// 対象の商品に当選者がいなかった場合、抽選を行う
+	for _, prizeNumber := range PrizeNumbers {
+		prize   := models.Prize{}
+		handler.Db.Where("id = ?", prizeNumber).Find(&prize)
+
+		if prize.Winner == "" {
+			handler.Db.Not("win = ?", "済み").Find(&WinUsers) // DBから当選済み以外のユーザーを抽出する
+
+			rand.Seed(time.Now().UnixNano())
+			for i := range WinUsers {
+				j := rand.Intn(i + 1)
+				WinUsers[i], WinUsers[j] = WinUsers[j], WinUsers[i]
+			}
+
+			winUser :=  models.User{}    // 変数を初期化
+			winUser = WinUsers[0]
+
+			winUser.Win = "済み"         // 当選したら当選済みにする
+			handler.Db.Save(&winUser)   // 指定のレコードを更新する
+
+			prize.Winner = winUser.Name // 当選者名を入れる
+			handler.Db.Save(&prize)     // 指定のレコードを更新する
+		}
+	}
+
+	handler.Db.Where("id IN (?)", PrizeNumbers).Find(&Prizes)
+
+	spew.Dump(Prizes)
+
+	c.HTML(http.StatusOK, "lottery_winners.html", gin.H{"prizes": Prizes})
+}
 
 // 参加者登録
 // 一覧表示
 func (handler *LottelyHandler) UserGetAll(c *gin.Context) {
 	var Users []models.User
-	handler.Db.Find(&Users) // DBから全てのレコードを取得する
+	handler.Db.Order("id asc").Find(&Users) // DBから全てのレコードを取得する
 	c.HTML(http.StatusOK, "user_index.html", gin.H{"users": Users}) // user_index.htmlに全てのレコードを渡す
 }
 
@@ -237,7 +394,7 @@ func (handler *LottelyHandler) UserDelete(c *gin.Context) {
 // 一覧表示
 func (handler *LottelyHandler) PrizeGetAll(c *gin.Context) {
 	var Prizes []models.Prize
-	handler.Db.Find(&Prizes) // DBから全てのレコードを取得する
+	handler.Db.Order("id asc").Find(&Prizes) // DBから全てのレコードを取得する
 	c.HTML(http.StatusOK, "prize_index.html", gin.H{"prizes": Prizes}) // prize_index.htmlに全てのレコードを渡す
 }
 

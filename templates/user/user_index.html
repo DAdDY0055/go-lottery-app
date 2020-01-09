@@ -18,16 +18,28 @@
 
 <br>
 
-<ul>
+<table border="1">
+    <tr>
+        <th>参加者番号</th>
+        <th>氏名</th>
+        <th>部署</th>
+        <th>当選済</th>
+        <th>編集</th>
+        <th>削除</th>
+    </tr>
     {{ range .users }}
-        <li>
-            <form method="POST" action="/user/delete/{{.ID}}">
-                {{.ID}} : {{ .Name }} : {{ .Department }} {{ .Win }}[<a href="/user/{{.ID}}">編集</a>]
-                <input type="submit" value="削除">
-            </form>
-        </li>
+    <tr>
+    <form method="POST" action="/prize/delete/{{.ID}}">
+        <td>{{.ID}}</td>
+        <td>{{ .Name }}</td>
+        <td>{{ .Department }}</td>
+        <td>{{ .Win }}</td>
+        <td>[<a href="/user/{{.ID}}">編集</a>]</td>
+        <td><input type="submit" value="削除"></td>
+    </form>
+    </tr>
     {{end}}
-</ul>
+</table>
 
 </body>
 </html>
