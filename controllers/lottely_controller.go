@@ -13,6 +13,7 @@ import (
     "math/rand"
 	"time"
 	"github.com/davecgh/go-spew/spew"
+	"strconv"
 )
 
 type LottelyHandler struct {
@@ -56,7 +57,7 @@ func (handler *LottelyHandler) ChoiseOne(c *gin.Context) {
 
 	// 対象の商品に当選者がいなかった場合、抽選を行う
 	if winPrize.Winner == "" {
-		handler.Db.Not("win = ?", "済み").Find(&WinUsers) // DBから当選済み以外のユーザーを抽出する
+		handler.Db.Not("win = ?", "済").Find(&WinUsers) // DBから当選済み以外のユーザーを抽出する
 
 		rand.Seed(time.Now().UnixNano())
 		for i := range WinUsers {
@@ -66,7 +67,7 @@ func (handler *LottelyHandler) ChoiseOne(c *gin.Context) {
 
 		winUser := WinUsers[0]
 
-		winUser.Win = "済み"            // 当選したら当選済みにする
+		winUser.Win = "済"            // 当選したら当選済みにする
 		handler.Db.Save(&winUser)      // 指定のレコードを更新する
 
 		winPrize.Winner = winUser.Name // 当選者名を入れる
@@ -92,7 +93,7 @@ func (handler *LottelyHandler) ChoiseTen(c *gin.Context) {
 		handler.Db.Where("id = ?", prizeNumber).Find(&prize)
 
 		if prize.Winner == "" {
-			handler.Db.Not("win = ?", "済み").Find(&WinUsers) // DBから当選済み以外のユーザーを抽出する
+			handler.Db.Not("win = ?", "済").Find(&WinUsers) // DBから当選済み以外のユーザーを抽出する
 
 			rand.Seed(time.Now().UnixNano())
 			for i := range WinUsers {
@@ -102,7 +103,7 @@ func (handler *LottelyHandler) ChoiseTen(c *gin.Context) {
 
 			winUser := WinUsers[0]
 
-			winUser.Win = "済み"            // 当選したら当選済みにする
+			winUser.Win = "済"            // 当選したら当選済みにする
 			handler.Db.Save(&winUser)      // 指定のレコードを更新する
 
 			prize.Winner = winUser.Name // 当選者名を入れる
@@ -131,7 +132,7 @@ func (handler *LottelyHandler) ChoiseTwe(c *gin.Context) {
 		handler.Db.Where("id = ?", prizeNumber).Find(&prize)
 
 		if prize.Winner == "" {
-			handler.Db.Not("win = ?", "済み").Find(&WinUsers) // DBから当選済み以外のユーザーを抽出する
+			handler.Db.Not("win = ?", "済").Find(&WinUsers) // DBから当選済み以外のユーザーを抽出する
 
 			rand.Seed(time.Now().UnixNano())
 			for i := range WinUsers {
@@ -142,7 +143,7 @@ func (handler *LottelyHandler) ChoiseTwe(c *gin.Context) {
 			winUser :=  models.User{}    // 変数を初期化
 			winUser = WinUsers[0]
 
-			winUser.Win = "済み"         // 当選したら当選済みにする
+			winUser.Win = "済"         // 当選したら当選済みにする
 			handler.Db.Save(&winUser)   // 指定のレコードを更新する
 
 			prize.Winner = winUser.Name // 当選者名を入れる
@@ -171,7 +172,7 @@ func (handler *LottelyHandler) ChoiseThe(c *gin.Context) {
 		handler.Db.Where("id = ?", prizeNumber).Find(&prize)
 
 		if prize.Winner == "" {
-			handler.Db.Not("win = ?", "済み").Find(&WinUsers) // DBから当選済み以外のユーザーを抽出する
+			handler.Db.Not("win = ?", "済").Find(&WinUsers) // DBから当選済み以外のユーザーを抽出する
 
 			rand.Seed(time.Now().UnixNano())
 			for i := range WinUsers {
@@ -182,7 +183,7 @@ func (handler *LottelyHandler) ChoiseThe(c *gin.Context) {
 			winUser :=  models.User{}    // 変数を初期化
 			winUser = WinUsers[0]
 
-			winUser.Win = "済み"         // 当選したら当選済みにする
+			winUser.Win = "済"         // 当選したら当選済みにする
 			handler.Db.Save(&winUser)   // 指定のレコードを更新する
 
 			prize.Winner = winUser.Name // 当選者名を入れる
@@ -211,7 +212,7 @@ func (handler *LottelyHandler) ChoiseThe2(c *gin.Context) {
 		handler.Db.Where("id = ?", prizeNumber).Find(&prize)
 
 		if prize.Winner == "" {
-			handler.Db.Not("win = ?", "済み").Find(&WinUsers) // DBから当選済み以外のユーザーを抽出する
+			handler.Db.Not("win = ?", "済").Find(&WinUsers) // DBから当選済み以外のユーザーを抽出する
 
 			rand.Seed(time.Now().UnixNano())
 			for i := range WinUsers {
@@ -222,7 +223,7 @@ func (handler *LottelyHandler) ChoiseThe2(c *gin.Context) {
 			winUser :=  models.User{}    // 変数を初期化
 			winUser = WinUsers[0]
 
-			winUser.Win = "済み"         // 当選したら当選済みにする
+			winUser.Win = "済"         // 当選したら当選済みにする
 			handler.Db.Save(&winUser)   // 指定のレコードを更新する
 
 			prize.Winner = winUser.Name // 当選者名を入れる
@@ -251,7 +252,7 @@ func (handler *LottelyHandler) Choisefor(c *gin.Context) {
 		handler.Db.Where("id = ?", prizeNumber).Find(&prize)
 
 		if prize.Winner == "" {
-			handler.Db.Not("win = ?", "済み").Find(&WinUsers) // DBから当選済み以外のユーザーを抽出する
+			handler.Db.Not("win = ?", "済").Find(&WinUsers) // DBから当選済み以外のユーザーを抽出する
 
 			rand.Seed(time.Now().UnixNano())
 			for i := range WinUsers {
@@ -262,7 +263,7 @@ func (handler *LottelyHandler) Choisefor(c *gin.Context) {
 			winUser :=  models.User{}    // 変数を初期化
 			winUser = WinUsers[0]
 
-			winUser.Win = "済み"         // 当選したら当選済みにする
+			winUser.Win = "済"         // 当選したら当選済みにする
 			handler.Db.Save(&winUser)   // 指定のレコードを更新する
 
 			prize.Winner = winUser.Name // 当選者名を入れる
@@ -291,7 +292,7 @@ func (handler *LottelyHandler) Choisearu(c *gin.Context) {
 		handler.Db.Where("id = ?", prizeNumber).Find(&prize)
 
 		if prize.Winner == "" {
-			handler.Db.Not("win = ?", "済み").Find(&WinUsers) // DBから当選済み以外のユーザーを抽出する
+			handler.Db.Not("win = ?", "済").Find(&WinUsers) // DBから当選済み以外のユーザーを抽出する
 
 			rand.Seed(time.Now().UnixNano())
 			for i := range WinUsers {
@@ -302,7 +303,7 @@ func (handler *LottelyHandler) Choisearu(c *gin.Context) {
 			winUser :=  models.User{}    // 変数を初期化
 			winUser = WinUsers[0]
 
-			winUser.Win = "済み"         // 当選したら当選済みにする
+			winUser.Win = "済"         // 当選したら当選済みにする
 			handler.Db.Save(&winUser)   // 指定のレコードを更新する
 
 			prize.Winner = winUser.Name // 当選者名を入れる
@@ -327,9 +328,10 @@ func (handler *LottelyHandler) UserGetAll(c *gin.Context) {
 
 // 新規作成
 func (handler *LottelyHandler) UserCreate(c *gin.Context) {
-	name, _ := c.GetPostForm("name") // user_index.htmlからnameを取得
-	department, _ := c.GetPostForm("department") // index.htmlからdepartmentを取得
-	handler.Db.Create(&models.User{Name: name, Department: department}) // レコードを挿入する
+	stringID, _ := c.GetPostForm("id") // index.htmlからidを取得
+	id, _   := strconv.Atoi(stringID)  // idをStringからintに変換
+	name, _ := c.GetPostForm("name")   // user_index.htmlからnameを取得
+	handler.Db.Create(&models.User{ID: id, Name: name}) // レコードを挿入する
   c.Redirect(http.StatusMovedPermanently, "/user")
 }
 
@@ -344,14 +346,18 @@ func (handler *LottelyHandler) UserEdit(c *gin.Context) {
 // 更新
 func (handler *LottelyHandler) UserUpdate(c *gin.Context) {
 	user := models.User{} // Task構造体の変数宣言
-	id := c.Param("id")   // edit.htmlからidを取得
+
+	stringID := c.Param("id")   // edit.htmlからidを取得
+	id, _   := strconv.Atoi(stringID)  // idをStringからintに変換
 	name, _ := c.GetPostForm("name") // index.htmlからnameを取得
-	department, _ := c.GetPostForm("department") // index.htmlからdepartmentを取得
-	// isWin, _ := c.GetPostForm("isWin") // index.htmlからdepartmentを取得
-	handler.Db.First(&user, id)      // idに一致するレコードを取得する
-	user.Name = name       // nameを上書きする
-	user.Department = department  // departmentを上書きする
-	// user.IsWin = isWin       // isWinを上書きする→Stringと判定されダメらしい
+	// department, _ := c.GetPostForm("department") // index.htmlからdepartmentを取得
+	win, _ := c.GetPostForm("win") // index.htmlからdepartmentを取得
+
+	handler.Db.First(&user, id)    // idに一致するレコードを取得する
+
+	user.ID = id       // idを上書きする
+	user.Name = name   // nameを上書きする
+	user.Win = win     // Winを上書きする
 	handler.Db.Save(&user) // 指定のレコードを更新する
 	c.Redirect(http.StatusMovedPermanently, "/user")
 }
@@ -383,7 +389,6 @@ func (handler *LottelyHandler) UserDelete(c *gin.Context) {
 //         }
 // 		name := record[0]
 // 		department := record[1]
-// 		handler.Db.Create(&models.User{Name: name, Department: department}) // レコードを挿入する
 
 //         log.Printf("%#v", record)
 //     }
@@ -400,8 +405,10 @@ func (handler *LottelyHandler) PrizeGetAll(c *gin.Context) {
 
 // 新規作成
 func (handler *LottelyHandler) PrizeCreate(c *gin.Context) {
+	stringID, _ := c.GetPostForm("id") // prize_index.htmlからidを取得
+	id, _   := strconv.Atoi(stringID)  // idをStringからintに変換
 	name, _ := c.GetPostForm("name") // prize_index.htmlからnameを取得
-	handler.Db.Create(&models.Prize{Name: name}) // レコードを挿入する
+	handler.Db.Create(&models.Prize{ID: id, Name: name}) // レコードを挿入する
   c.Redirect(http.StatusMovedPermanently, "/prize")
 }
 
@@ -416,11 +423,13 @@ func (handler *LottelyHandler) PrizeEdit(c *gin.Context) {
 // 更新
 func (handler *LottelyHandler) PrizeUpdate(c *gin.Context) {
 	prize := models.Prize{} // Task構造体の変数宣言
-	id := c.Param("id")   // edit.htmlからidを取得
+	stringID := c.Param("id")   // edit.htmlからidを取得
+	id, _   := strconv.Atoi(stringID)  // idをStringからintに変換
 	name, _ := c.GetPostForm("name") // prize_edit.htmlからnameを取得
 	win, _ := c.GetPostForm("win") // prize_edit.htmlからwinを取得
 	handler.Db.First(&prize, id)      // idに一致するレコードを取得する
-	prize.Name = name       // nameを上書きする
+	prize.ID = id      // idを上書きする
+	prize.Name = name  // nameを上書きする
 	prize.Winner = win // winを上書きする
 	handler.Db.Save(&prize) // 指定のレコードを更新する
 	c.Redirect(http.StatusMovedPermanently, "/prize")

@@ -9,15 +9,14 @@
 <table border="1">
     <tr>
         <th>参加者氏名</th>
-        <th>部署名</th>
-        <th>当選済みか</th>
+        <!-- <th>部署名</th> -->
+        <th>当選済</th>
         <th>更新</th>
     </tr>
 
     <tr>
     <form action="/prize/update/{{.prize.ID}}" method="POST">
         <td><input type="text" name="name" value="{{.user.Name}}"></td>
-        <td><input type="text" name="department" value="{{.user.Department}}"></td>
         <td><input type="text" name="win" value="{{.user.Win}}"></td>
         <td><input type="submit" value="更新"></td>
     </form>

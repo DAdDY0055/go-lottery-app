@@ -1,9 +1,7 @@
 package models
 
-import "github.com/jinzhu/gorm"
-
 type Prize struct {
-	gorm.Model
-	Name string
+    ID     int
+	Name   string
 	Winner string
 }

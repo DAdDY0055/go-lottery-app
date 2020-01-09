@@ -6,8 +6,8 @@
 </head>
 <body>
 <form method="POST" action="/user">
+    ID   : <input type="text" name="id" value="">
     Name : <input type="text" name="name" value="">
-    Department : <input type="text" name="department" value="">
     <input type="submit" value="登録">
 </form>
 
@@ -22,7 +22,7 @@
     <tr>
         <th>参加者番号</th>
         <th>氏名</th>
-        <th>部署</th>
+        <!-- <th>部署</th> -->
         <th>当選済</th>
         <th>編集</th>
         <th>削除</th>
@@ -32,7 +32,6 @@
     <form method="POST" action="/prize/delete/{{.ID}}">
         <td>{{.ID}}</td>
         <td>{{ .Name }}</td>
-        <td>{{ .Department }}</td>
         <td>{{ .Win }}</td>
         <td>[<a href="/user/{{.ID}}">編集</a>]</td>
         <td><input type="submit" value="削除"></td>
