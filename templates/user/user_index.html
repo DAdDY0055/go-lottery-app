@@ -3,42 +3,60 @@
 <head>
     <meta charset="UTF-8">
     <title>参加者登録</title>
+    <link rel="stylesheet" href="assets/css/style.css">
+    <link rel="icon" type="image/png" href="assets/images/candee_icon.png">
 </head>
 <body>
-<form method="POST" action="/user">
-    ID   : <input type="text" name="id" value="">
-    Name : <input type="text" name="name" value="">
-    <input type="submit" value="登録">
-</form>
 
-<form method="POST" action="/csv">
-    CSVファイル(1列目：氏名、2列目：部署名) : <input type="file" name="csv" value="">
-    <input type="submit" value="登録">
-</form>
+<header class="page-header wrapper">
+<h1><a href="/"><img class="logo" src="assets/images/candee_icon.png" alt="Candee Nigth"></a></h1>
+<h1>CandeeMorning+Night 大新年会！ 大抽選会！！</h1>
 
-<br>
+<nav>
+    <ul class="main-nav">
+        <li><a href="/prize">景品一覧</a></li>
+        <li><a href="/user">参加者一覧</a></li>
+    </ul>
+</nav>
+</header>
 
-<table border="1">
-    <tr>
-        <th>参加者番号</th>
-        <th>氏名</th>
-        <!-- <th>部署</th> -->
-        <th>当選済</th>
-        <th>編集</th>
-        <th>削除</th>
-    </tr>
-    {{ range .users }}
-    <tr>
-    <form method="POST" action="/prize/delete/{{.ID}}">
-        <td>{{.ID}}</td>
-        <td>{{ .Name }}</td>
-        <td>{{ .Win }}</td>
-        <td>[<a href="/user/{{.ID}}">編集</a>]</td>
-        <td><input type="submit" value="削除"></td>
+<div class="home-content wrapper">
+
+    <form method="POST" action="/user">
+        ID   : <input type="text" name="id" value="">
+        Name : <input type="text" name="name" value="">
+        <input type="submit" value="登録">
     </form>
-    </tr>
-    {{end}}
-</table>
+
+    <form method="POST" action="/csv">
+        CSVファイル(1列目：氏名、2列目：部署名) : <input type="file" name="csv" value="">
+        <input type="submit" value="登録">
+    </form>
+
+    <br>
+
+    <table border="1">
+        <tr>
+            <th>参加者番号</th>
+            <th>氏名</th>
+            <!-- <th>部署</th> -->
+            <th>当選済</th>
+            <th>編集</th>
+            <th>削除</th>
+        </tr>
+        {{ range .users }}
+        <tr>
+        <form method="POST" action="/prize/delete/{{.ID}}">
+            <td>{{.ID}}</td>
+            <td>{{ .Name }}</td>
+            <td>{{ .Win }}</td>
+            <td>[<a href="/user/{{.ID}}">編集</a>]</td>
+            <td><input type="submit" value="削除"></td>
+        </form>
+        </tr>
+        {{end}}
+    </table>
+</div>
 
 </body>
 </html>

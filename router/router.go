@@ -9,6 +9,7 @@ import (
 func Router() {
 	router := gin.Default()
 
+	router.Static("/assets", "./assets")
 	// globパターンに一致するHTMLファイルをロードしHTML Rendererに関連付ける
 	router.LoadHTMLGlob("templates/*/*.html")
 
