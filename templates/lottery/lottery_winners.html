@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <title>当選者</title>
+</head>
+<body>
+
+<br>
+
+<table border="1">
+    <tr>
+        <th>景品</th>
+        <th>当選者</th>
+    </tr>
+    {{ range .prizes }}
+    <tr>
+        <td>{{ .Name }}</td>
+        <td>{{ .Winner }}</td>
+    </tr>
+    {{ end }}
+</table>
+
+<button type="button" name="winner" value="aaa" onclick="location.href='/'">
+    <font size="5" color="#333399">次の抽選へ</font>
+</button>
+
+</body>
+</html>

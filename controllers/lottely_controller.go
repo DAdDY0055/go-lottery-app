@@ -6,18 +6,18 @@ import (
 	"github.com/DAdDY0055/go-lottery-app/models"
 	"github.com/jinzhu/gorm"
 	"net/http"
-	"encoding/csv"
-    "io"
-    "log"
-	"os"
+	// "encoding/csv"
+    // "io"
+    // "log"
+	// "os"
     "math/rand"
 	"time"
+	"github.com/davecgh/go-spew/spew"
 )
 
 type LottelyHandler struct {
 	Db *gorm.DB
 }
-
 
 // TODO: 超ファットコントローラーになっているのでモデルに処理を移す
 // 抽選画面
@@ -46,12 +46,13 @@ func (handler *LottelyHandler) Top(c *gin.Context) {
 // }
 
 
-// 当選者選択
-func (handler *LottelyHandler) ChoiseUser(c *gin.Context) {
+// 当選者選択(一つの景品対一つの商品)
+func (handler *LottelyHandler) ChoiseOne(c *gin.Context) {
 	var WinUsers []models.User
 	winPrize := models.Prize{}
 
-	handler.Db.Where("id = ?", 1).Find(&winPrize)
+	id := c.Param("id")   // edit.htmlからidを取得
+	handler.Db.Where("id = ?", id).Find(&winPrize)
 
 	// 対象の商品に当選者がいなかった場合、抽選を行う
 	if winPrize.Winner == "" {
@@ -76,6 +77,87 @@ func (handler *LottelyHandler) ChoiseUser(c *gin.Context) {
 		c.HTML(http.StatusOK, "lottery_winner.html", gin.H{"prize": winPrize})
 	}
 }
+
+// 10位〜14位の当選者選択
+func (handler *LottelyHandler) ChoiseTen(c *gin.Context) {
+	var WinUsers []models.User
+	var Prizes []models.Prize
+	// まとめて型定義する方法があった気がする
+	// prize   := models.Prize{}
+	PrizeNumbers := []int{10, 11, 12, 13, 14}
+
+	// 対象の商品に当選者がいなかった場合、抽選を行う
+	for _, prizeNumber := range PrizeNumbers {
+		prize   := models.Prize{}
+		handler.Db.Where("id = ?", prizeNumber).Find(&prize)
+
+		if prize.Winner == "" {
+			handler.Db.Not("win = ?", "済み").Find(&WinUsers) // DBから当選済み以外のユーザーを抽出する
+
+			rand.Seed(time.Now().UnixNano())
+			for i := range WinUsers {
+				j := rand.Intn(i + 1)
+				WinUsers[i], WinUsers[j] = WinUsers[j], WinUsers[i]
+			}
+
+			winUser := WinUsers[0]
+
+			winUser.Win = "済み"            // 当選したら当選済みにする
+			handler.Db.Save(&winUser)      // 指定のレコードを更新する
+
+			prize.Winner = winUser.Name // 当選者名を入れる
+			handler.Db.Save(&prize)     // 指定のレコードを更新する
+		}
+	}
+
+	handler.Db.Where("id IN (?)", PrizeNumbers).Find(&Prizes)
+
+	spew.Dump(Prizes)
+
+	c.HTML(http.StatusOK, "lottery_winners.html", gin.H{"prizes": Prizes})
+}
+
+// 10位〜14位の当選者選択
+func (handler *LottelyHandler) ChoiseTen(c *gin.Context) {
+	var WinUsers []models.User
+	var Prizes []models.Prize
+	// まとめて型定義する方法があった気がする
+	// prize   := models.Prize{}
+	PrizeNumbers := []int{10, 11, 12, 13, 14}
+
+	// 対象の商品に当選者がいなかった場合、抽選を行う
+	for _, prizeNumber := range PrizeNumbers {
+		prize   := models.Prize{}
+		handler.Db.Where("id = ?", prizeNumber).Find(&prize)
+
+		if prize.Winner == "" {
+			handler.Db.Not("win = ?", "済み").Find(&WinUsers) // DBから当選済み以外のユーザーを抽出する
+
+			rand.Seed(time.Now().UnixNano())
+			for i := range WinUsers {
+				j := rand.Intn(i + 1)
+				WinUsers[i], WinUsers[j] = WinUsers[j], WinUsers[i]
+			}
+
+			winUser :=  models.User{}    // 変数を初期化
+			winUser = WinUsers[0]
+
+			winUser.Win = "済み"         // 当選したら当選済みにする
+			handler.Db.Save(&winUser)   // 指定のレコードを更新する
+
+			prize.Winner = winUser.Name // 当選者名を入れる
+			handler.Db.Save(&prize)     // 指定のレコードを更新する
+		}
+	}
+
+	handler.Db.Where("id IN (?)", PrizeNumbers).Find(&Prizes)
+
+	spew.Dump(Prizes)
+
+	c.HTML(http.StatusOK, "lottery_winners.html", gin.H{"prizes": Prizes})
+}
+
+
 
 
 // 参加者登録
@@ -127,29 +209,29 @@ func (handler *LottelyHandler) UserDelete(c *gin.Context) {
 }
 
 // CSV読み込み
-func (handler *LottelyHandler) UserReadCsv(c *gin.Context) {
-	ff := c.Param("csv")
-	file, err := os.Open(ff)
-    failOnError(err)
-    defer file.Close()
+// func (handler *LottelyHandler) UserReadCsv(c *gin.Context) {
+// 	ff := c.Param("csv")
+// 	file, err := os.Open(ff)
+//     failOnError(err)
+//     defer file.Close()
 
-    reader := csv.NewReader(file)
+//     reader := csv.NewReader(file)
 
-    for {
-        record, err := reader.Read() // 1行読み出す
-        if err == io.EOF {
-            break
-        } else {
-            failOnError(err)
-        }
-		name := record[0]
-		department := record[1]
-		handler.Db.Create(&models.User{Name: name, Department: department}) // レコードを挿入する
+//     for {
+//         record, err := reader.Read() // 1行読み出す
+//         if err == io.EOF {
+//             break
+//         } else {
+//             failOnError(err)
+//         }
+// 		name := record[0]
+// 		department := record[1]
+// 		handler.Db.Create(&models.User{Name: name, Department: department}) // レコードを挿入する
 
-        log.Printf("%#v", record)
-    }
-    c.Redirect(http.StatusMovedPermanently, "/user")
-}
+//         log.Printf("%#v", record)
+//     }
+//     c.Redirect(http.StatusMovedPermanently, "/user")
+// }
 
 // 景品登録
 // 一覧表示
@@ -197,28 +279,28 @@ func (handler *LottelyHandler) PrizeDelete(c *gin.Context) {
 }
 
 // CSV読み込み
-func (handler *LottelyHandler) PrizeReadCsv(c *gin.Context) {
-	ff := c.Param("csv")
-	file, err := os.Open(ff)
-    failOnError(err)
-    defer file.Close()
+// func (handler *LottelyHandler) PrizeReadCsv(c *gin.Context) {
+// 	ff := c.Param("csv")
+// 	file, err := os.Open(ff)
+//     failOnError(err)
+//     defer file.Close()
 
-    reader := csv.NewReader(file)
+//     reader := csv.NewReader(file)
 
-    for {
-        record, err := reader.Read() // 1行読み出す
-        if err == io.EOF {
-            break
-        } else {
-            failOnError(err)
-        }
-		name := record[0]
-		handler.Db.Create(&models.Prize{Name: name}) // レコードを挿入する
+//     for {
+//         record, err := reader.Read() // 1行読み出す
+//         if err == io.EOF {
+//             break
+//         } else {
+//             failOnError(err)
+//         }
+// 		name := record[0]
+// 		handler.Db.Create(&models.Prize{Name: name}) // レコードを挿入する
 
-        log.Printf("%#v", record)
-    }
-    c.Redirect(http.StatusMovedPermanently, "/prize")
-}
+//         log.Printf("%#v", record)
+//     }
+//     c.Redirect(http.StatusMovedPermanently, "/prize")
+// }
 
 // func failOnError(err error) {
 //     if err != nil {

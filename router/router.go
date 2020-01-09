@@ -19,12 +19,13 @@ func Router() {
 
 	// 抽選
 	router.GET("/", handler.Top)
-	router.GET("/lottery", handler.WinnerAnnounce)
-	// router.GET("/lottery/aru", handler.ChoisePrize)
-	// router.GET("/lottery/kj", handler.ChoisePrize)
-	// router.GET("/lottery/yamamura", handler.ChoisePrize)
-	// router.GET("/lottery/kogishi", handler.ChoisePrize)
-	router.GET("/winner", handler.ChoiseUser)
+	router.GET("/winner/multi/ten", handler.ChoiseTen)
+	router.GET("/winner/one/:id", handler.ChoiseOne) // 一つの景品発表の場合はこれでID指定
+	router.GET("/winner/twe", handler.ChoiseTwe)
+	// router.GET("/winner/the", handler.ChoiseThe)
+	// router.GET("/winner/the2", handler.ChoiseThe2)
+	// router.GET("/winner/for", handler.Choisefor)
+	// router.GET("/winner/one/aru", handler.Choisearu)
 
 	// ユーザー
 	router.GET("/user", handler.UserGetAll)
@@ -32,7 +33,7 @@ func Router() {
 	router.GET("/user/:id", handler.UserEdit)
 	router.POST("/user/update/:id", handler.UserUpdate)
 	router.POST("/user/delete/:id", handler.UserDelete)
-	router.POST("/user/csv", handler.UserReadCsv)
+	// router.POST("/user/csv", handler.UserReadCsv)
 
 	// 商品
 	router.GET("/prize", handler.PrizeGetAll)
@@ -40,7 +41,7 @@ func Router() {
 	router.GET("/prize/:id", handler.PrizeEdit)
 	router.POST("/prize/update/:id", handler.PrizeUpdate)
 	router.POST("/prize/delete/:id", handler.PrizeDelete)
-	router.POST("/prize/csv", handler.PrizeReadCsv)
+	// router.POST("/prize/csv", handler.PrizeReadCsv)
 
   // Routerをhttp.Serverに接続し、HTTPリクエストのリスニングとサービスを開始する
   router.Run()
