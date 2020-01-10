@@ -70,6 +70,10 @@ li {
     margin: 18px;
 }
 
+table {
+    margin: auto;
+}
+
 /* 見出し */
 .page-title {
     font-size: 5rem;

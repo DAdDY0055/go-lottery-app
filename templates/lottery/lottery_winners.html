@@ -1,29 +1,46 @@
 <!DOCTYPE html>
 <html lang="ja">
-<head>
+<head class="page-header">
     <meta charset="UTF-8">
     <title>当選者</title>
+    <!-- なぜか上のディレクトリ(../)にしないと当たらない -->
+    <link rel="stylesheet" href="../assets/css/style.css">
+    <link rel="icon" type="image/png" href="../assets/images/candee_icon.png">
 </head>
+
 <body>
+
+<header class="page-header wrapper">
+<h1><a href="/"><img class="logo" src="../assets/images/candee_icon.png" alt="Candee Nigth"></a></h1>
+<h1><a href="/">CandeeMorning+Night 大新年会！ 大抽選会！！</a></h1>
+
+<nav>
+    <ul class="main-nav">
+        <li><a href="/prize">景品一覧</a></li>
+        <li><a href="/user">参加者一覧</a></li>
+    </ul>
+</nav>
+</header>
 
 <br>
 
-<table border="1">
-    <tr>
-        <th>景品</th>
-        <th>当選者</th>
-    </tr>
-    {{ range .prizes }}
-    <tr>
-        <td>{{ .Name }}</td>
-        <td>{{ .Winner }}</td>
-    </tr>
-    {{ end }}
-</table>
+<div class="home-content wrapper">
+    <table border="1">
+        <tr>
+            <th>景品</th>
+            <th>当選者</th>
+        </tr>
+        {{ range .prizes }}
+        <tr>
+            <td>{{ .Name }}</td>
+            <td>{{ .Winner }}</td>
+        </tr>
+        {{ end }}
+    </table>
 
-<button type="button" name="winner" value="aaa" onclick="location.href='/'">
-    <font size="5" color="#333399">次の抽選へ</font>
-</button>
+    <button type="button" name="winner" value="aaa" onclick="location.href='/'">
+        <font size="5" color="#333399">次の抽選へ</font>
+    </button>
 
 </body>
 </html>
