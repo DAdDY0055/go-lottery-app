@@ -270,13 +270,13 @@ func (handler *LottelyHandler) Choisefor(c *gin.Context) {
 	c.HTML(http.StatusOK, "lottery_winners.html", gin.H{"prizes": Prizes})
 }
 
-// あったで賞(46位〜49,51,52位)の当選者選択
+// あったで賞(46位〜49,51,53位)の当選者選択
 func (handler *LottelyHandler) Choisearu(c *gin.Context) {
 	var WinUsers []models.User
 	var Prizes []models.Prize
 	// まとめて型定義する方法があった気がする
 	// prize   := models.Prize{}
-	PrizeNumbers := []int{46, 47, 48, 49, 51, 52}
+	PrizeNumbers := []int{46, 47, 48, 49, 50, 51, 52, 53}
 
 	// 対象の商品に当選者がいなかった場合、抽選を行う
 	for _, prizeNumber := range PrizeNumbers {
