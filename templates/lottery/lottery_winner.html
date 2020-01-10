@@ -25,20 +25,22 @@
 
 <br>
 
-<table border="1">
-    <tr>
-        <th>景品</th>
-        <th>当選者</th>
-    </tr>
-    <tr>
-        <td>{{ .prize.Name }}</td>
-        <td>{{ .prize.Winner }}</td>
-    </tr>
-</table>
+<div class="home-content wrapper">
+    <table border="1">
+        <tr>
+            <th>景品</th>
+            <th>当選者</th>
+        </tr>
+        <tr>
+            <td>{{ .prize.Name }}</td>
+            <td>{{ .prize.Winner }}</td>
+        </tr>
+    </table>
 
-<button type="button" name="winner" value="aaa" onclick="location.href='/'">
-    <font size="5" color="#333399">次の抽選へ</font>
-</button>
+    <li>
+        <a class="button" href="/">次の抽選へ</a>
+    </li>
+</div>
 
 </body>
 </html>

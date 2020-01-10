@@ -13,6 +13,7 @@ var (
 )
 
 func Initialize() {
+	// TODO:環境変数で出し分けたい
 	// connection := "host=127.0.0.1 port=15432 user=postgres password=postgres dbname=postgres sslmode=disable"
 	connection := os.Getenv("DATABASE_URL")
 	db, err = gorm.Open("postgres", connection)
