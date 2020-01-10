@@ -115,3 +115,67 @@ table {
 .next .button:hover {
     background: initial;
 }
+
+/* 記事部分 */
+article {
+    width: 60%;
+}
+
+article h1{
+    font-size: 40px;
+    margin: 0
+}
+
+/* サイドバー */
+aside {
+    width: 30%;
+}
+
+.top-content {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 50px;
+}
+
+.top-content {
+    text-align: center;
+}
+.top-content p {
+    font-size: 1.125rem;
+    margin: 10px 0 42px;
+}
+
+.top-content li {
+    margin: 18px;
+}
+
+.prize-content {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 50px;
+}
+
+.prize-content {
+    text-align: center;
+}
+.prize-content p {
+    font-size: 1.125rem;
+    margin: 10px 0 42px;
+}
+
+.prize-content li {
+    margin: 18px;
+}
+
+.prize-article {
+    width: 50%;
+}
+
+.prize-aside {
+    width: 50%;
+}
+
+.prize-aside table {
+    width: 50%;
+    border: none;
+}

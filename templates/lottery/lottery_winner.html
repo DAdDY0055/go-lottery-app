@@ -25,21 +25,25 @@
 
 <br>
 
-<div class="home-content wrapper">
-    <table class="prize" border="1">
-        <tr>
-            <th>景品</th>
-            <th>当選者</th>
-        </tr>
-        <tr>
-            <td>{{ .prize.Name }}</td>
-            <td>{{ .prize.Winner }}</td>
-        </tr>
-    </table>
+<div class="prize-content wrapper">
+    <article class="prize-article">
+        <h1><a href="/"><img class="logo" src="../../assets/images/{{ .prize.ID }}.png" alt="Candee Nigth"></a></h1>
+    </article>
 
-    <li>
-        <a class="button" href="/">次の抽選へ</a>
-    </li>
+    <aside class="prize-aside">
+        <table class="prize" border="1">
+            <tr>
+                <!-- <th>{{ .prize.Name }}</th> -->
+                <th>{{ .prize.Name }}</th>
+            </tr>
+            <tr>
+                <td>{{ .prize.Winner }}</td>
+            </tr>
+        </table>
+        <li>
+            <a class="button" href="/">次の抽選へ</a>
+        </li>
+    </aside>
 </div>
 
 </body>
