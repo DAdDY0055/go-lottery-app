@@ -25,6 +25,11 @@ func (handler *LottelyHandler) Top(c *gin.Context) {
 	c.HTML(http.StatusOK, "lottery_index.html", gin.H{})
 }
 
+// おまけ商品ページ
+func (handler *LottelyHandler) Next(c *gin.Context) {
+	c.HTML(http.StatusOK, "lottery_next.html", gin.H{})
+}
+
 // 景品選択
 // func (handler *LottelyHandler) WinnerAnnounce(c *gin.Context) {
 // 	var WinPrizes []models.Prize

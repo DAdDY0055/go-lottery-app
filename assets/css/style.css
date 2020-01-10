@@ -75,7 +75,7 @@ table {
 }
 
 .prize {
-    font-size: 50px;
+    font-size: 40px;
 }
 
 /* 見出し */
@@ -90,12 +90,28 @@ table {
 .button {
     font-size: 1.375rem;
     background: #0bd;
-    /* background: pink; */
     color: #fff;
     border-radius: 5px;
     padding: 15px 30px;
 }
 .button:hover {
-    /* background: #0090aa; */
     background: pink;
+}
+
+.next {
+    text-align: right;
+}
+
+.next .button {
+    font-size: initial;
+    background: initial;
+    color: initial;
+    border-radius: initial;
+    padding: initial;
+    margin: auto;
+    text-align: right;
+}
+
+.next .button:hover {
+    background: initial;
 }

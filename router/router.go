@@ -20,6 +20,7 @@ func Router() {
 
 	// 抽選
 	router.GET("/", handler.Top)
+	router.GET("/next", handler.Next)
 	router.GET("/winner/multi/ten", handler.ChoiseTen)
 	router.GET("/winner/one/:id", handler.ChoiseOne) // 一つの景品発表の場合はこれでID指定
 	router.GET("/winner/twe", handler.ChoiseTwe)
