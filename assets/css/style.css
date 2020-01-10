@@ -74,6 +74,10 @@ table {
     margin: auto;
 }
 
+.prize {
+    font-size: 50px;
+}
+
 /* 見出し */
 .page-title {
     font-size: 5rem;

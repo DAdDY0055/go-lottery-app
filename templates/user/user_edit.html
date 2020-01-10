@@ -3,14 +3,14 @@
 <head class="page-header">
     <meta charset="UTF-8">
     <title>参加者編集</title>
-    <link rel="stylesheet" href="assets/css/style.css">
-    <link rel="icon" type="image/png" href="assets/images/candee_icon.png">
+    <link rel="stylesheet" href="../assets/css/style.css">
+    <link rel="icon" type="image/png" href="../assets/images/candee_icon.png">
 </head>
 
 <body>
 
 <header class="page-header wrapper">
-<h1><a href="/"><img class="logo" src="assets/images/candee_icon.png" alt="Candee Nigth"></a></h1>
+<h1><a href="/"><img class="logo" src="../assets/images/candee_icon.png" alt="Candee Nigth"></a></h1>
 <h1><a href="/">CandeeMorning+Night 大新年会！ 大抽選会！！</a></h1>
 
 <nav>
@@ -30,7 +30,7 @@
     </tr>
 
     <tr>
-    <form action="/prize/update/{{.prize.ID}}" method="POST">
+    <form action="/user/update/{{.user.ID}}" method="POST">
         <td><input type="text" name="name" value="{{.user.Name}}"></td>
         <td><input type="text" name="win" value="{{.user.Win}}"></td>
         <td><input type="submit" value="更新"></td>
