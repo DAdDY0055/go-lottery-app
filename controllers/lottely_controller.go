@@ -82,7 +82,7 @@ func (handler *LottelyHandler) ChoiseOne(c *gin.Context) {
 }
 
 // 10位〜14位の当選者選択
-func (handler *LottelyHandler) ChoiseTwe(c *gin.Context) {
+func (handler *LottelyHandler) ChoiseTen(c *gin.Context) {
 	var WinUsers []models.User
 	var Prizes []models.Prize
 	// まとめて型定義する方法があった気がする
@@ -120,7 +120,7 @@ func (handler *LottelyHandler) ChoiseTwe(c *gin.Context) {
 }
 
 // 15位〜29位の当選者選択
-func (handler *LottelyHandler) ChoiseTen(c *gin.Context) {
+func (handler *LottelyHandler) ChoiseTwe(c *gin.Context) {
 	var WinUsers []models.User
 	var Prizes []models.Prize
 	// まとめて型定義する方法があった気がする
