@@ -82,7 +82,7 @@ func (handler *LottelyHandler) ChoiseOne(c *gin.Context) {
 }
 
 // 10位〜14位の当選者選択
-func (handler *LottelyHandler) ChoiseTen(c *gin.Context) {
+func (handler *LottelyHandler) ChoiseTwe(c *gin.Context) {
 	var WinUsers []models.User
 	var Prizes []models.Prize
 	// まとめて型定義する方法があった気がする
@@ -103,7 +103,8 @@ func (handler *LottelyHandler) ChoiseTen(c *gin.Context) {
 				WinUsers[i], WinUsers[j] = WinUsers[j], WinUsers[i]
 			}
 
-			winUser := WinUsers[0]
+			winUser := models.User{} // 変数を初期化
+			winUser = WinUsers[0]
 
 			winUser.Win = "済"         // 当選したら当選済みにする
 			handler.Db.Save(&winUser) // 指定のレコードを更新する
@@ -119,7 +120,7 @@ func (handler *LottelyHandler) ChoiseTen(c *gin.Context) {
 }
 
 // 15位〜29位の当選者選択
-func (handler *LottelyHandler) ChoiseTwe(c *gin.Context) {
+func (handler *LottelyHandler) ChoiseTen(c *gin.Context) {
 	var WinUsers []models.User
 	var Prizes []models.Prize
 	// まとめて型定義する方法があった気がする
@@ -238,7 +239,7 @@ func (handler *LottelyHandler) Choisefor(c *gin.Context) {
 	var Prizes []models.Prize
 	// まとめて型定義する方法があった気がする
 	// prize   := models.Prize{}
-	PrizeNumbers := []int{41, 42, 43, 44, 45}
+	PrizeNumbers := []int{41, 42, 43}
 
 	// 対象の商品に当選者がいなかった場合、抽選を行う
 	for _, prizeNumber := range PrizeNumbers {
