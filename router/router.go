@@ -33,16 +33,16 @@ func Router() {
 	router.GET("/user", handler.UserGetAll)
 	router.POST("/user", handler.UserCreate)
 	router.GET("/user/:id", handler.UserEdit)
-	router.POST("/user/update/:id", handler.UserUpdate)
-	router.POST("/user/delete/:id", handler.UserDelete)
+	// router.POST("/user/update/:id", handler.UserUpdate)
+	// router.POST("/user/delete/:id", handler.UserDelete)
 	// router.POST("/user/csv", handler.UserReadCsv)
 
 	// 商品
 	router.GET("/prize", handler.PrizeGetAll)
 	router.POST("/prize", handler.PrizeCreate)
 	router.GET("/prize/:id", handler.PrizeEdit)
-	router.POST("/prize/update/:id", handler.PrizeUpdate)
-	router.POST("/prize/delete/:id", handler.PrizeDelete)
+	// router.POST("/prize/update/:id", handler.PrizeUpdate)
+	// router.POST("/prize/delete/:id", handler.PrizeDelete)
 	// router.POST("/prize/csv", handler.PrizeReadCsv)
 
 	// Routerをhttp.Serverに接続し、HTTPリクエストのリスニングとサービスを開始する
